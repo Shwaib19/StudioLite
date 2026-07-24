@@ -19,12 +19,14 @@ pub struct DownloadProgress {
 #[derive(Debug, Clone, Serialize)]
 pub enum DownloadStatus {
     Downloading,
+    #[allow(dead_code)]
     Paused,
     Completed,
     Error,
 }
 
 /// Internal state for a running download.
+#[allow(dead_code)]
 struct DownloadTask {
     url: String,
     destination: String,
@@ -233,12 +235,6 @@ pub fn cancel_download(download_id: String) -> Result<(), String> {
     } else {
         Err("Download not found".to_string())
     }
-}
-
-#[tauri::command]
-pub fn get_download_status(_download_id: String) -> Result<Option<DownloadProgress>, String> {
-    let _downloads = DOWNLOADS.lock().map_err(|e| e.to_string())?;
-    Ok(None)
 }
 
 fn emit_progress(

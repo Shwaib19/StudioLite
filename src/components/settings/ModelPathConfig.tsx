@@ -22,7 +22,7 @@ export default function ModelPathConfig() {
   };
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-3 w-full">
       <div className="flex gap-2">
         <input
           type="text"
@@ -30,36 +30,38 @@ export default function ModelPathConfig() {
           onChange={(e) => setNewPath(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && addPath()}
           placeholder="C:\Models\GGUF"
-          className="flex-1 px-3 py-1.5 text-sm rounded-md border border-neutral-200 dark:border-dark-border bg-white dark:bg-dark-card focus:outline-none focus:ring-2 focus:ring-primary"
+          className="flex-1 min-w-0 px-3 py-2 text-sm rounded-md border border-neutral-200 dark:border-dark-border bg-white dark:bg-dark-card focus:outline-none focus:ring-2 focus:ring-primary"
         />
         <button
           onClick={addPath}
-          className="px-3 py-1.5 text-sm rounded-md bg-primary text-white hover:bg-primary-hover transition-colors cursor-pointer"
+          className="px-4 py-2 text-sm rounded-md bg-primary text-white hover:bg-primary-hover transition-colors cursor-pointer shrink-0"
         >
           Add
         </button>
       </div>
 
-      <div className="space-y-1">
-        {settings.modelDirectories.map((path) => (
-          <div
-            key={path}
-            className="flex items-center justify-between px-3 py-2 rounded-md bg-neutral-50 dark:bg-dark-bg text-sm"
-          >
-            <span className="truncate">{path}</span>
-            <button
-              onClick={() => removePath(path)}
-              className="text-xs text-error hover:underline cursor-pointer ml-2"
+      {settings.modelDirectories.length > 0 && (
+        <div className="space-y-1.5">
+          {settings.modelDirectories.map((path) => (
+            <div
+              key={path}
+              className="flex items-center justify-between px-3 py-2 rounded-md bg-neutral-50 dark:bg-dark-bg border border-neutral-200 dark:border-dark-border text-sm"
             >
-              Remove
-            </button>
-          </div>
-        ))}
-      </div>
+              <span className="truncate text-neutral-600 dark:text-dark-text-secondary">{path}</span>
+              <button
+                onClick={() => removePath(path)}
+                className="text-xs text-error hover:underline cursor-pointer ml-3 shrink-0"
+              >
+                Remove
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
 
       {settings.modelDirectories.length === 0 && (
-        <p className="text-xs text-neutral-400">
-          No directories configured. Add a path to scan for GGUF model files.
+        <p className="text-sm text-neutral-400 dark:text-dark-text-secondary w-full">
+          No directories configured. Add a path above to scan for GGUF model files.
         </p>
       )}
     </div>
