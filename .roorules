@@ -1,0 +1,37 @@
+# Directives d'Exécution & Bonnes Pratiques
+
+## 1. Gestion des Dépendances & Terminal
+
+- Quand tu dois installer des packages, regroupe-les en une seule commande `npm install`.
+- Pour les vérifications de types ou de build Rust, utilise `cargo check` ou `tsc --noEmit` avant d'affirmer que le code fonctionne.
+
+## 2. Règles Spécifiques Tauri v2
+
+- Utilise la syntaxe Tauri v2 (`@tauri-apps/api` et les plugins spécifiques v2 comme `@tauri-apps/plugin-http` ou `@tauri-apps/plugin-shell`).
+- Ne propose pas de syntaxe Tauri v1 (comme `window.__TAURI__`).
+
+## 3. Boucle Obligatoire de Vérification & Test (CRITIQUE)
+
+- **Validation systématique :** Après CHAQUE modification ou implémentation d'une fonctionnalité majeure, tu DOIS tester et vérifier ton code avant de conclure la tâche.
+- **Protocoles de test :**
+  - Exécute `npx tsc --noEmit` pour valider l'absence d'erreurs de typage TypeScript.
+  - Exécute `cargo check` dans le dossier `src-tauri` si le code Rust / backend a été touché.
+  - S'il s'agit d'une feature UI ou d'un flux logique, vérifie via le terminal que le serveur de dev (`npm run tauri dev`) compile sans warnings ni erreurs bloquantes.
+- Ne marque JAMAIS une tâche comme terminée dans `TODO.md` sans avoir confirmé que le build / test passe avec succès.
+
+## 4. Économie de Tokens & Concision
+
+- Va droit au but : applique les changements dans les fichiers sans écrire de longs paragraphes d'explication théorique.
+- Si une tâche ou un test échoue, analyse directement le log d'erreur du terminal et corrige-le immédiatement avant de passer à la suite.
+
+## 5. Règle Obligatoire : Commits Git Systématiques
+
+- **Post-Validation uniquement :** Une fois qu'une modification (mineure ou majeure) a été testée et validée (build OK, types OK), tu DOIS immédiatement effectuer un commit Git.
+- **Convention Conventional Commits :** Utilise un message de commit clair et structuré respectant le format :
+  - `feat:` pour une nouvelle fonctionnalité.
+  - `fix:` pour une correction de bug.
+  - `refactor:` pour une restructuration de code sans changement fonctionnel.
+  - `docs:` pour la documentation ou le suivi (`ARCHITECTURE.md`, `TODO.md`).
+  - `style:` / `chore:` pour la configuration, le formatage ou les dépendances.
+- **Contenu du message :** Décris précisément ce qui a été fait en une ou deux phrases claires (ex: `feat(ui): add model selector sidebar component with dark theme`).
+- Ne passe JAMAIS à la tâche suivante sans avoir validé et commité l'étape précédente.

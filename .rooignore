@@ -1,0 +1,25 @@
+# Dépendances & Builds (À ignorer ABSOLUMENT)
+node_modules/
+dist/
+build/
+src-tauri/target/
+.output/
+
+# Fichiers médias et volumineux
+assets/*.png
+assets/*.jpg
+assets/*.mp4
+*.gguf
+*.bin
+
+# Fichiers de configuration/méta lourds
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+Cargo.lock
+
+# Cache & Logs
+.DS_Store
+*.log
+.git/
+.vscode/
