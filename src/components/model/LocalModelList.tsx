@@ -1,16 +1,40 @@
 import { useState, useEffect } from 'react';
 import type { GgufModelInfo } from '../../types/model';
+import { listGgufModels } from '../../services/tauriCommands';
 
 export default function LocalModelList() {
-  const models: GgufModelInfo[] = [];
-  const [loading] = useState(false);
+  const [models, setModels] = useState<GgufModelInfo[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Will be implemented when Tauri commands are available
+    loadModels();
   }, []);
+
+  async function loadModels() {
+    setLoading(true);
+    setError(null);
+    try {
+      const result = await listGgufModels();
+      setModels(result as unknown as GgufModelInfo[]);
+    } catch (err) {
+      setError(`Failed to list models: ${(err as Error).message}`);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   if (loading) {
     return <div className="text-sm text-neutral-400">Scanning for models...</div>;
+  }
+
+  if (error) {
+    return (
+      <div className="text-sm text-error">
+        {error}
+        <button onClick={loadModels} className="ml-2 underline cursor-pointer">Retry</button>
+      </div>
+    );
   }
 
   if (models.length === 0) {
@@ -32,6 +56,7 @@ export default function LocalModelList() {
           <div className="text-xs text-neutral-400 mt-1">
             {(model.size_bytes / 1024 / 1024 / 1024).toFixed(2)} GB
             {model.quantization && ` · ${model.quantization}`}
+            {model.model_name && ` · ${model.model_name}`}
           </div>
         </div>
       ))}
