@@ -125,7 +125,7 @@ cargo check         # Rust
 ---
 ## First result
 <img width="610" height="557" alt="image" src="https://github.com/user-attachments/assets/c81e6ff4-2442-4e41-b896-0ff4e19b0827" />
-Very dusapointing but it's okay,
+Very disapointing but it's okay, alot of thing doesn't work properly, it doesn't even work
 just gonna find way to improve this
 
 ## Licence
