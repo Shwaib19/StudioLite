@@ -5,6 +5,7 @@ import StatusBar from './StatusBar';
 import ChatView from '../chat/ChatView';
 import ModelBrowser from '../model/ModelBrowser';
 import SettingsPanel from '../settings/SettingsPanel';
+import ToastContainer from '../shared/Toast';
 
 type ActiveView = 'chat' | 'models' | 'settings';
 
@@ -21,18 +22,13 @@ export default function AppShell() {
       />
 
       <div className="flex flex-1 overflow-hidden">
-        {/* Sidebar */}
         {sidebarOpen && (
           <Sidebar
-            onNewChat={() => {
-              setActiveView('chat');
-              // Clear conversation handled by store
-            }}
+            onNewChat={() => setActiveView('chat')}
             onClose={() => setSidebarOpen(false)}
           />
         )}
 
-        {/* Main content */}
         <main className="flex-1 overflow-hidden">
           {activeView === 'chat' && <ChatView />}
           {activeView === 'models' && <ModelBrowser />}
@@ -41,6 +37,7 @@ export default function AppShell() {
       </div>
 
       <StatusBar />
+      <ToastContainer />
     </div>
   );
 }
