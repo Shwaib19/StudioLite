@@ -9,6 +9,7 @@ use commands::file::{
 use commands::model::{get_model_info, list_gguf_models};
 use commands::system::get_system_info;
 use config::{load_config, save_config};
+use download::{cancel_download, download_model, pause_download};
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -20,7 +21,7 @@ pub fn run() {
         .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_store::Builder::default().build())
-        // Config commands
+        // Commands
         .invoke_handler(tauri::generate_handler![
             load_config,
             save_config,
@@ -34,6 +35,10 @@ pub fn run() {
             get_model_info,
             // System commands
             get_system_info,
+            // Download commands
+            download_model,
+            pause_download,
+            cancel_download,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

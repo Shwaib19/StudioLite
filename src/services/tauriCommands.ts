@@ -60,3 +60,25 @@ export async function getModelInfo(path: string): Promise<ModelListEntry> {
 export async function getSystemInfo(): Promise<SystemInfo> {
   return invoke<SystemInfo>('get_system_info');
 }
+
+// ── Download Commands ──
+
+export interface DownloadResult {
+  download_id: string;
+}
+
+export async function downloadModel(
+  url: string,
+  destination: string,
+  filename: string,
+): Promise<string> {
+  return invoke<string>('download_model', { url, destination, filename });
+}
+
+export async function pauseDownload(downloadId: string): Promise<void> {
+  await invoke('pause_download', { downloadId });
+}
+
+export async function cancelDownload(downloadId: string): Promise<void> {
+  await invoke('cancel_download', { downloadId });
+}
