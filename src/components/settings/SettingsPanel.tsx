@@ -1,12 +1,14 @@
 import { useSettingsStore } from '../../stores/settingsStore';
 import { useTheme } from '../../hooks/useTheme';
+import ProviderConfig from './ProviderConfig';
+import ModelPathConfig from './ModelPathConfig';
 
 interface SettingsPanelProps {
   onClose: () => void;
 }
 
 export default function SettingsPanel({ onClose }: SettingsPanelProps) {
-  const { settings, updateSettings } = useSettingsStore();
+  const { settings, updateSettings, resetSettings } = useSettingsStore();
   const { theme, setTheme } = useTheme();
 
   return (
@@ -55,6 +57,18 @@ export default function SettingsPanel({ onClose }: SettingsPanelProps) {
           </div>
         </section>
 
+        {/* Providers */}
+        <section>
+          <h3 className="font-heading font-semibold text-sm mb-3">Providers</h3>
+          <ProviderConfig />
+        </section>
+
+        {/* Model Paths */}
+        <section>
+          <h3 className="font-heading font-semibold text-sm mb-3">Model Directories</h3>
+          <ModelPathConfig />
+        </section>
+
         {/* Chat */}
         <section>
           <h3 className="font-heading font-semibold text-sm mb-3">Chat</h3>
@@ -79,6 +93,16 @@ export default function SettingsPanel({ onClose }: SettingsPanelProps) {
               />
             </div>
           </div>
+        </section>
+
+        {/* Reset */}
+        <section>
+          <button
+            onClick={resetSettings}
+            className="px-3 py-1.5 text-sm rounded-md border border-error text-error hover:bg-error hover:text-white transition-colors cursor-pointer"
+          >
+            Reset to Defaults
+          </button>
         </section>
 
         {/* About */}
